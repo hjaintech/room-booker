@@ -29,6 +29,15 @@ const styles = theme => ({
     },
 });
 class AddMeetingForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            date: null,
+            startTime: '',
+            endTime: '',
+            building: ''
+        };
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -40,6 +49,9 @@ class AddMeetingForm extends React.Component {
                         label="Date"
                         type="date"
                         InputLabelProps={{ shrink: true }}
+                        value={this.state.date}
+                        onChange={(e) => {this.setState({date: e.target.value})}}
+                        format={'DD/MM/YYYY'}
                     />
                     <TextField
                         label="Start Time"
@@ -47,6 +59,8 @@ class AddMeetingForm extends React.Component {
                         type="time"
                         InputLabelProps={{ shrink: true }}
                         inputProps={{ step: 900 }}
+                        value={this.state.startTime}
+                        onChange={(e) => {this.setState({startTime: e.target.value})}}
                     />
                     <TextField
                         label="End Time"
@@ -54,28 +68,22 @@ class AddMeetingForm extends React.Component {
                         type="time"
                         InputLabelProps={{ shrink: true }}
                         inputProps={{ step: 900 }}
+                        value={this.state.endTime}
+                        onChange={(e) => {this.setState({endTime: e.target.value})}}
                     />
                     <FormControl className={classes.fullWidth}>
                         <InputLabel htmlFor="age-simple">Building</InputLabel>
-                        <Select
-                            value={5}
-                            onChange={this.handleChange}
-                            inputProps={{
-                                name: 'age',
-                                id: 'age-simple',
-                            }}
-                        >
-                            <MenuItem value="">
-                                <em>Select Building</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                        <Select value={this.state.building} onChange={(e) => {this.setState({building: e.target.value})}}>
+                            {
+                                this.props.buildings.map((building) => {
+                                    return (<MenuItem value={building.name}>{building.name}</MenuItem>);
+                                })
+                            }
                         </Select>
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.props.nextPressed} color="primary">
+                    <Button onClick={() => {this.props.nextPressed({...this.state})}} color="primary">
                         Next
                 </Button>
                 </DialogActions>

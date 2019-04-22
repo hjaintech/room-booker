@@ -21,7 +21,8 @@ const styles = theme => ({
 });
 
 function AlignItemsList(props) {
-    const { classes } = props;
+    const { classes, availableRooms, building } = props;
+    
     const meetingRowData = [{
         roomName: 'Gujarat Room',
         building: '5',
@@ -50,15 +51,15 @@ function AlignItemsList(props) {
 
     return (
         <div>
-            <DialogTitle id="form-dialog-title">Please Select one of the free rooms</DialogTitle>
+            <DialogTitle>Please Select one of the free rooms</DialogTitle>
             <DialogContent>
                 <List className={classes.root}>
                     {
-                        meetingRowData.map((meeting) => (
+                        availableRooms.map((room) => (
                             <MeetingRoomRow 
-                                roomName={meeting.roomName}
-                                building={meeting.building}
-                                floor={meeting.floor}
+                                roomName={room.name}
+                                building={building}
+                                floor={room.floor}
                             />
                         ))
                     }
