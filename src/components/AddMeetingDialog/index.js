@@ -2,6 +2,7 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import AddMeetingForm from '../AddMeetingForm';
 import RoomSelectionForm from '../RoomSelectionForm';
+import { withStyles } from '@material-ui/core/styles';
 
 class AddMeetingDialog extends React.Component {
     constructor(props) {
