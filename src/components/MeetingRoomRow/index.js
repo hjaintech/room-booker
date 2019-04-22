@@ -3,15 +3,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
-const MeetingRoomRow = () => {
+const MeetingRoomRow = (props) => {
     return (
         <ListItem alignItems="flex-start">
             <ListItemText
-                primary="Punjab"
+                primary={props.roomName}
                 secondary={
                     <React.Fragment>
-                        {'Building 8'}
-                        {'Floor 7'}
+                        {`Building ${props.building}`}
+                        {`Floor ${props.floor}`}
                     </React.Fragment>
                 }
             />

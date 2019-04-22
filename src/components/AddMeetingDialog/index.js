@@ -4,6 +4,13 @@ import AddMeetingForm from '../AddMeetingForm';
 import RoomSelectionForm from '../RoomSelectionForm';
 import { withStyles } from '@material-ui/core/styles';
 
+const styles = theme => ({
+    dialog: {
+        width: 800,
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    }
+});
 class AddMeetingDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -13,8 +20,9 @@ class AddMeetingDialog extends React.Component {
     }
     render(){
         const {step} = this.state;
+        const {classes} = this.props;
         return (
-            <Dialog open={this.props.showDialog} onClose={this.handleClose} >
+            <Dialog className={classes.dialog} open={this.props.showDialog} onClose={this.handleClose} >
                 {step === 0 && <AddMeetingForm nextPressed={() => {this.setState({step: 1})}} />}
                 {step === 1 && <RoomSelectionForm />}
             </Dialog>
@@ -22,4 +30,4 @@ class AddMeetingDialog extends React.Component {
     }
 }
 
-export default AddMeetingDialog;
+export default withStyles(styles)(AddMeetingDialog);
