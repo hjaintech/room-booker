@@ -13,7 +13,25 @@ const styles = () => ({
     paddingVertical: 50,
     display: 'flex',
     flexDirection: 'row',
+    marginBottom: 50,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 100
   },
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginHorizontal: 'auto',
+    backgroundColor: '#c1bf6a',
+    paddingBottom: '100%'
+  },
+  addBtn: {
+    width: 150
+  },
+  bottomContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
 });
 
 const stringToDate = function(dateString) {
@@ -49,7 +67,7 @@ class Index extends React.Component {
     const landingData = this.getCardsData();
     this.state = {
       ...landingData,
-      showAddMeetingDialog: true
+      showAddMeetingDialog: false
     };
   }
   
@@ -123,7 +141,7 @@ class Index extends React.Component {
     ];
 
     return (
-      <div>
+      <div className={classes.mainContainer}>
         <div className={classes.root}>
           <DisplayCard 
             title='Buildings'
@@ -138,14 +156,15 @@ class Index extends React.Component {
             data={meetingsData}
           />
         </div>
-        <Button variant="contained" color="primary" onClick={this.handleClick}>
-          Add a Meeting
-        </Button>
-        <AddMeetingDialog 
-          showDialog={this.state.showAddMeetingDialog}
-          buildings={this.state.buildings}
-        />
-        
+        <div className={classes.bottomContainer}>
+          <Button className={classes.addBtn} variant="contained" color="primary" onClick={this.handleClick}>
+            Add a Meeting
+          </Button>
+          <AddMeetingDialog 
+            showDialog={this.state.showAddMeetingDialog}
+            buildings={this.state.buildings}
+          />
+        </div>
       </div>
     );
   }
