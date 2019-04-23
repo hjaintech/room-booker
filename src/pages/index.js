@@ -7,6 +7,7 @@ import withRoot from '../withRoot';
 import DisplayCard from '../components/DisplayCard';
 import AddMeetingDialog from '../components/AddMeetingDialog';
 import {getMeetingData} from '../utils/NetworkUtils';
+import {stringToDate, isSameDate, isDateToday, isTimingCurrent} from '../utils/CommonUtils';
 
 const styles = () => ({ 
   root: {
@@ -34,33 +35,6 @@ const styles = () => ({
     marginRight: 'auto'
   }
 });
-
-const stringToDate = function(dateString) {
-  const [dd, mm, yyyy] = dateString.split("/");
-  return new Date(`${yyyy}-${mm}-${dd}`);
-};
-
-const isSameDate = (d1, d2) => {
-  return (d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate());
-}
-
-const isDateToday = (dateString) => {
-  const inputDate = stringToDate(dateString);
-  const currentDate = new Date();
-  return isSameDate(currentDate, inputDate);
-}
-
-const isTimingCurrent = (startTime, endTime) => {
-  const currentDate = new Date();
-  const currentHours = currentDate.getHours();
-  const currentMinutes = currentDate.getMinutes();
-  const [startTimeHour, startTimeMinutes] = startTime.split(':');
-  const [endTimeHour, endTimeMinutes] = endTime.split(':');
-  debugger;
-  return ((currentHours >= parseInt(startTimeHour, 10) && currentHours <= parseInt(endTimeHour, 10)) &&
-    (currentMinutes >= parseInt(startTimeMinutes, 10) && currentMinutes <= parseInt(endTimeMinutes, 10)));
-}
-
 
 class Index extends React.Component {
   constructor(props){
