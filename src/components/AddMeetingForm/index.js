@@ -38,6 +38,13 @@ class AddMeetingForm extends React.Component {
             building: ''
         };
     }
+
+    onNextPressed = () => {
+        const {date, startTime, endTime, building} = this.state;
+        if (date && startTime && endTime && building) {
+            this.props.nextPressed({...this.state});
+        }
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -83,9 +90,12 @@ class AddMeetingForm extends React.Component {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => {this.props.nextPressed({...this.state})}} color="primary">
+                    <Button onClick={() => {this.props.hideDialog(false)}} color="primary">
+                        Close
+                    </Button>
+                    <Button onClick={this.onNextPressed} color="primary">
                         Next
-                </Button>
+                    </Button>
                 </DialogActions>
             </div>);
     }

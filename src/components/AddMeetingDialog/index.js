@@ -29,11 +29,23 @@ const stringToDate = function(dateString) {
 class AddMeetingDialog extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.getInitialStateObj();
+    }
+    getInitialStateObj = () => ({
+        step: 0,
+        selectedBuilding: '',
+        availableRooms: ''
+    });
+    componentDidMount() {
+        this.setState({
             step: 0,
             selectedBuilding: '',
             availableRooms: ''
-        };
+        });
+    }
+    hideDialog = (...args) => {
+        this.setState(this.getInitialStateObj());
+        this.props.hideDialog(...args);
     }
     step1NextPressed(dataFromPrevStep, buildings) {
         const buildingData = buildings.find((building) => {return building.name === dataFromPrevStep.building});
@@ -81,8 +93,8 @@ class AddMeetingDialog extends React.Component {
         const {classes} = this.props;
         return (
             <Dialog className={classes.dialog} open={this.props.showDialog} onClose={this.handleClose} >
-                {step === 0 && <AddMeetingForm nextPressed={(...args) => this.step1NextPressed(...args, this.props.buildings)} buildings= {this.props.buildings}/>}
-                {step === 1 && <RoomSelectionForm availableRooms={availableRooms} building={selectedBuilding}/>}
+                {step === 0 && <AddMeetingForm nextPressed={(...args) => this.step1NextPressed(...args, this.props.buildings)} buildings= {this.props.buildings} hideDialog={this.hideDialog}/>}
+                {step === 1 && <RoomSelectionForm availableRooms={availableRooms} building={selectedBuilding} hideDialog={this.hideDialog}/>}
             </Dialog>
         );
     }

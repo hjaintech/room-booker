@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import DisplayCard from '../components/DisplayCard';
@@ -67,7 +68,8 @@ class Index extends React.Component {
     const landingData = this.getCardsData();
     this.state = {
       ...landingData,
-      showAddMeetingDialog: false
+      showAddMeetingDialog: false,
+      showSuccessToast: false
     };
   }
   
@@ -116,6 +118,19 @@ class Index extends React.Component {
       showAddMeetingDialog: true
     })
   }
+
+  hideAddMeetingDialog = (isBookingSuccess) => {
+    this.setState({
+      showAddMeetingDialog: false
+    });
+
+    if (isBookingSuccess) {
+      this.setState({showSuccessToast: true})
+      setTimeout(() => {
+        this.setState({showSuccessToast: false})
+      }, 4000);
+    }
+  }
   render() {
     const { classes } = this.props;
     const {meetings, rooms} = this.state;
@@ -163,8 +178,15 @@ class Index extends React.Component {
           <AddMeetingDialog 
             showDialog={this.state.showAddMeetingDialog}
             buildings={this.state.buildings}
+            hideDialog={this.hideAddMeetingDialog}
           />
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical:'bottom', horizontal:'center' }}
+          open={this.state.showSuccessToast}
+          onClose={this.handleClose}
+          message={<span >Meeting Room Booked Successfully !</span>}
+        />
       </div>
     );
   }

@@ -20,73 +20,54 @@ const styles = theme => ({
     },
 });
 
-function AlignItemsList(props) {
-    const { classes, availableRooms, building } = props;
-    
-    const meetingRowData = [{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    },{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    },{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    },{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    },{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    },{
-        roomName: 'Gujarat Room',
-        building: '5',
-        floor: '2'
-    }];
+class AlignItemsList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedRoom: ''
+        };
+    }
 
-    return (
-        <div>
-            <DialogTitle>Please Select one of the free rooms</DialogTitle>
-            <DialogContent>
-                <List className={classes.root}>
-                    {
-                        availableRooms.map((room) => (
-                            <MeetingRoomRow 
-                                roomName={room.name}
-                                building={building}
-                                floor={room.floor}
-                            />
-                        ))
-                    }
-                </List>
-            </DialogContent>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                open={true}
-                autoHideDuration={6000}
-                //onClose={this.handleClose}
-                >
-                <div>Some text in snackbar</div>
-                {/* <MySnackbarContentWrapper
-                    onClose={this.handleClose}
-                    variant="success"
-                    message="This is a success message!"
-                /> */}
-                </Snackbar>
-            <DialogActions>
-                <Button color="primary">Book</Button>
-            </DialogActions>
-        </div>
+    onMeetingRoomSelected = (roomName) => {
+        debugger;
+        this.setState({selectedRoom: roomName});
+    }
 
-    );
+    onBookPress = () => {
+        this.props.hideDialog(true);
+    }
+
+    render() {
+        const { classes, availableRooms, building } = this.props;
+        const {selectedRoom} = this.state;
+
+        return (
+            <div>
+                <DialogTitle>Please Select one of the free rooms</DialogTitle>
+                <DialogContent>
+                    <List className={classes.root}>
+                        {
+                            availableRooms.map((room) => (
+                                <MeetingRoomRow
+                                    roomName={room.name}
+                                    building={building}
+                                    floor={room.floor}
+                                    onSelected={this.onMeetingRoomSelected}
+                                    selected={room.name === selectedRoom}
+                                />
+                            ))
+                        }
+                    </List>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {this.props.hideDialog(false)}} color="primary">CLOSE</Button>
+                    <Button onClick={this.onBookPress} color="primary">Book</Button>
+                </DialogActions>
+            </div>
+
+        );
+    }
+
 }
 
 AlignItemsList.propTypes = {
