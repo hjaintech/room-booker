@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../../withRoot';
 import AddMeetingDialog from '../../components/AddMeetingDialog';
 import styleSheet from './LandingCss';
-import {loadMeetingData, hideAddMeetingDialog, showAddMeetingDialog, hideSuccessToast, showSuccessToast, closeAddMeetingDialog} from '../../actions/landingActions';
+import {loadMeetingData, hideAddMeetingDialog, showAddMeetingDialog, closeAddMeetingDialog} from '../../actions/landingActions';
 import LandingCardsSection from '../../components/LandingCardsSection';
 
 const styles = () => (styleSheet);
@@ -69,8 +69,6 @@ const mapDispatchToProps = dispatch => ({
   loadMeetingData: () => dispatch(loadMeetingData()),
   hideAddMeetingDialog: () => dispatch(hideAddMeetingDialog()),
   showAddMeetingDialog: () => dispatch(showAddMeetingDialog()),
-  hideSuccessToast: () => dispatch(hideSuccessToast()),
-  showSuccessToast: () => dispatch(showSuccessToast()),
   closeAddMeetingDialog: (isBookingSuccess) => dispatch(closeAddMeetingDialog(isBookingSuccess))
 });
 
