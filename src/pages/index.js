@@ -155,6 +155,7 @@ class Index extends React.Component {
             hideDialog={this.hideAddMeetingDialog}
           />
         </div>
+        
         <Snackbar
           anchorOrigin={{ vertical:'bottom', horizontal:'center' }}
           open={this.state.showSuccessToast}
