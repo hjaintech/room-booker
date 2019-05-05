@@ -39,12 +39,18 @@ const styles = () => ({
 class Index extends React.Component {
   constructor(props){
     super(props);
-    const landingData = this.getCardsData();
     this.state = {
-      ...landingData,
+      buildings: [],
+      rooms: {},
+      meetings: {},
       showAddMeetingDialog: false,
       showSuccessToast: false
     };
+  }
+
+  componentDidMount() {
+    const {buildings, rooms, meetings} = this.getCardsData();
+    this.setState({ buildings, rooms, meetings});
   }
   
   getCardsData = () => {
@@ -108,6 +114,9 @@ class Index extends React.Component {
   render() {
     const { classes } = this.props;
     const {meetings, rooms} = this.state;
+    console.log('render Called');
+    console.log(this.state);
+    console.log('--------------------');
     const roomsData = [
       {
         label: 'Total',
