@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../../withRoot';
-import DisplayCard from '../../components/DisplayCard';
 import AddMeetingDialog from '../../components/AddMeetingDialog';
 import styleSheet from './LandingCss';
 import {loadMeetingData, hideAddMeetingDialog, showAddMeetingDialog, hideSuccessToast, showSuccessToast, closeAddMeetingDialog} from '../../actions/landingActions';
+import LandingCardsSection from '../../components/LandingCardsSection';
 
 const styles = () => (styleSheet);
 
@@ -20,43 +20,13 @@ class Index extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const {meetings, rooms} = this.props;
-    const roomsData = [
-      {
-        label: 'Total',
-        value: rooms.total
-      },
-      {
-        label: 'Free Now',
-        value: rooms.free
-      }
-    ];
-    const meetingsData = [
-      {
-        label: 'Total Meetings Today',
-        value: meetings.total
-      },
-      {
-        label: 'Total Meetings Going on',
-        value: meetings.goingNow
-      }
-    ];
     return (
       <div className={classes.mainContainer}>
-        <div className={classes.root}>
-          <DisplayCard 
-            title='Buildings'
-            data={[{label: 'Total', value: this.props.buildings.length}]}
-          />
-          <DisplayCard 
-            title='Rooms'
-            data={roomsData}
-          />
-          <DisplayCard 
-            title='Meetings'
-            data={meetingsData}
-          />
-        </div>
+        <LandingCardsSection
+          buildings={this.props.buildings}
+          rooms={this.props.rooms}
+          meetings={this.props.meetings}
+        />
         <div className={classes.bottomContainer}>
           <Button className={classes.addBtn} variant="contained" color="primary" onClick={this.props.showAddMeetingDialog}>
             Add a Meeting
