@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from './pages/index';
+import Index from './pages/Landing/index';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
 import configureStore from './store';

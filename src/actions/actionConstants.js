@@ -1,1 +1,1 @@
-export default DUMMY_ACTION='DUMMY_ACTION';
+export const SAVE_ROOM_DATA='SAVE_ROOM_DATA';

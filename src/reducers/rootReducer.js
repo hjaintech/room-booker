@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-// Import the reducer files
+import meetingRoomReducer from './meetingRoomReducer';
 
 export default combineReducers({
-    // Add the reducers
+    meetingRoomReducer
 });
