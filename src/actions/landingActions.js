@@ -1,6 +1,6 @@
 import {getMeetingData} from '../utils/NetworkUtils';
-import {SAVE_ROOM_DATA} from './actionConstants';
-import {stringToDate, isSameDate, isDateToday, isTimingCurrent} from '../utils/CommonUtils';
+import {SAVE_ROOM_DATA, HIDE_SHOW_ADD_MEETING_DIALOG, HIDE_SHOW_SUCCESS_TOAST} from './actionConstants';
+import {isDateToday, isTimingCurrent} from '../utils/CommonUtils';
 
 export const loadMeetingData = () => {
     const meetingsData = getMeetingData();
@@ -41,4 +41,43 @@ export const loadMeetingData = () => {
         goingNow: totalMeetingsGoingOn
       },
     };
+  }
+
+export const hideAddMeetingDialog = () => {
+    return {
+        type: HIDE_SHOW_ADD_MEETING_DIALOG,
+        isAddMeetingDialogVisible: false
+    };
+}
+
+export const showAddMeetingDialog = () => {
+    return {
+        type: HIDE_SHOW_ADD_MEETING_DIALOG,
+        isAddMeetingDialogVisible: true
+    };
+}
+
+export const hideSuccessToast = () => {
+    return {
+        type: HIDE_SHOW_SUCCESS_TOAST,
+        isSuccessToastVisible: false
+    };
+}
+
+export const showSuccessToast = () => {
+    return {
+        type: HIDE_SHOW_SUCCESS_TOAST,
+        isSuccessToastVisible: true
+    };
+}
+
+export const closeAddMeetingDialog = (isBookingSuccess) => (dispatch) => {
+    dispatch(hideAddMeetingDialog());
+
+    if (isBookingSuccess) {
+        dispatch(showSuccessToast());
+      setTimeout(() => {
+        dispatch(hideSuccessToast());
+      }, 4000);
+    }
   }

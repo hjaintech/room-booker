@@ -7,40 +7,17 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../../withRoot';
 import DisplayCard from '../../components/DisplayCard';
 import AddMeetingDialog from '../../components/AddMeetingDialog';
-import {getMeetingData} from '../../utils/NetworkUtils';
-import {stringToDate, isSameDate, isDateToday, isTimingCurrent} from '../../utils/CommonUtils';
 import styleSheet from './LandingCss';
-import {loadMeetingData} from '../../actions/landingActions';
+import {loadMeetingData, hideAddMeetingDialog, showAddMeetingDialog, hideSuccessToast, showSuccessToast, closeAddMeetingDialog} from '../../actions/landingActions';
 
 const styles = () => (styleSheet);
 
 class Index extends React.Component {
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount() {
     this.props.loadMeetingData();
   }
 
-  handleClick = () => {
-    this.setState({
-      showAddMeetingDialog: true
-    })
-  }
-
-  hideAddMeetingDialog = (isBookingSuccess) => {
-    this.setState({
-      showAddMeetingDialog: false
-    });
-
-    if (isBookingSuccess) {
-      this.setState({showSuccessToast: true})
-      setTimeout(() => {
-        this.setState({showSuccessToast: false})
-      }, 4000);
-    }
-  }
   render() {
     const { classes } = this.props;
     const {meetings, rooms} = this.props;
@@ -64,7 +41,6 @@ class Index extends React.Component {
         value: meetings.goingNow
       }
     ];
-
     return (
       <div className={classes.mainContainer}>
         <div className={classes.root}>
@@ -82,19 +58,19 @@ class Index extends React.Component {
           />
         </div>
         <div className={classes.bottomContainer}>
-          <Button className={classes.addBtn} variant="contained" color="primary" onClick={this.handleClick}>
+          <Button className={classes.addBtn} variant="contained" color="primary" onClick={this.props.showAddMeetingDialog}>
             Add a Meeting
           </Button>
           <AddMeetingDialog 
-            showDialog={this.props.showAddMeetingDialog}
+            showDialog={this.props.isAddMeetingDialogVisible}
             buildings={this.props.buildings}
-            hideDialog={this.hideAddMeetingDialog}
+            hideDialog={this.props.closeAddMeetingDialog}
           />
         </div>
         
         <Snackbar
           anchorOrigin={{ vertical:'bottom', horizontal:'center' }}
-          open={this.props.showSuccessToast}
+          open={this.props.isSuccessToastVisible}
           onClose={this.handleClose}
           message={<span >Meeting Room Booked Successfully !</span>}
         />
@@ -107,12 +83,25 @@ Index.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ...state.meetingRoomReducer
-});
+const mapStateToProps = state => {
+  const {buildings, rooms, meetings, isAddMeetingDialogVisible, isSuccessToastVisible} = state.meetingRoomReducer;
+  return {
+    buildings,
+    rooms,
+    meetings,
+    isAddMeetingDialogVisible,
+    isSuccessToastVisible
+  };
+};
+
 
 const mapDispatchToProps = dispatch => ({
-  loadMeetingData: () => dispatch(loadMeetingData())
+  loadMeetingData: () => dispatch(loadMeetingData()),
+  hideAddMeetingDialog: () => dispatch(hideAddMeetingDialog()),
+  showAddMeetingDialog: () => dispatch(showAddMeetingDialog()),
+  hideSuccessToast: () => dispatch(hideSuccessToast()),
+  showSuccessToast: () => dispatch(showSuccessToast()),
+  closeAddMeetingDialog: (isBookingSuccess) => dispatch(closeAddMeetingDialog(isBookingSuccess))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRoot(withStyles(styles)(Index)));
