@@ -3,6 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import AddMeetingForm from '../AddMeetingForm';
 import RoomSelectionForm from '../RoomSelectionForm';
 import { withStyles } from '@material-ui/core/styles';
+import {isSameDate} from '../../utils/CommonUtils';
 
 const styles = theme => ({
     dialog: {
@@ -10,22 +11,7 @@ const styles = theme => ({
         marginLeft: 'auto',
         marginRight: 'auto'
     }
-});
-
-const stringToDate = function(dateString) {
-    const [dd, mm, yyyy] = dateString.split("/");
-    return new Date(`${yyyy}-${mm}-${dd}`);
-  };
-  
-  const isSameDate = (d1, d2) => {
-    return (d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate());
-  }
-  
-  const isDateToday = (dateString) => {
-    const inputDate = stringToDate(dateString);
-    const currentDate = new Date();
-    return isSameDate(currentDate, inputDate);
-  }
+});  
 class AddMeetingDialog extends React.Component {
     constructor(props) {
         super(props);
